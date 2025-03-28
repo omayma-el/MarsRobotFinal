@@ -55,10 +55,10 @@ public class NasaWeatherService {
                             for (int i = 0; i < solKeys.length(); i++) {
                                 String solId = solKeys.getString(i);
                                 JSONObject solData = response.getJSONObject(solId);
-                                Sol sol = new Sol(solId, solData); // Using the model constructor to parse JSON
+                                Sol sol = new Sol(solId, solData);
                                 sols.add(sol);
                             }
-                            callback.onSuccess(sols); // Pass the list of sols to the callback
+                            callback.onSuccess(sols);
                         } catch (JSONException e) {
                             callback.onError(e);
                         }

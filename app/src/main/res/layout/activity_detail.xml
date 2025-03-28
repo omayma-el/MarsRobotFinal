@@ -37,4 +37,13 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sol_temp_detail" />
+
+    <fr.omayma.marsrobot.view.SolView
+        android:id="@+id/solView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sol_pressure_detail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,44 +35,31 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        // Initialize views
         solIdTextView = findViewById(R.id.sol_id);
         avgTempTextView = findViewById(R.id.avg_temperature);
         avgPressureTextView = findViewById(R.id.avg_pressure);
 
-        // Handle system bar insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Initialize ListView
         listView = findViewById(R.id.sol_list);
 
-        // Fetch weather data
         NasaWeatherService.getInstance(this).getWeatherData(new NasaWeatherCallback() {
             @Override
             public void onSuccess(List<Sol> sols) {
                 Toast.makeText(HomeActivity.this, "Weather Data Retrieved!", Toast.LENGTH_SHORT).show();
                 Toast.makeText(HomeActivity.this, "NB Sols : " + sols.size(), Toast.LENGTH_SHORT).show();
 
-
-                // Set up the adapter for the ListView
                 SolAdapter adapter = new SolAdapter(HomeActivity.this, sols);
                 listView.setAdapter(adapter);
 
                 listView.setOnItemClickListener((parent, view, position, id) -> {
-                    // Get the clicked Sol object
                     Sol clickedSol = sols.get(position);
-
-                    // Create an Intent to start the DetailActivity
                     Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-
-                    // Pass the Sol object to the DetailActivity
                     intent.putExtra("sol", clickedSol);
-
-                    // Start the DetailActivity
                     startActivity(intent);
                 });
             }
@@ -84,11 +71,4 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    // Method to display a Sol's details
-    private void showSol(Sol sol) {
-        // Set Sol data to the TextViews
-        solIdTextView.setText("Sol : " + sol.getSolId());
-        avgTempTextView.setText("Temperature avg: " + sol.getAvgTemp() + "°C");
-        avgPressureTextView.setText("Pressure avg: " + sol.getAvgPressure() + " Pa");
-    }
 }

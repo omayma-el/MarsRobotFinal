@@ -9,11 +9,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 import fr.omayma.marsrobot.R;
 import fr.omayma.marsrobot.model.Sol;
+import fr.omayma.marsrobot.model.WindSensor;
+import fr.omayma.marsrobot.view.SolView;
 
 public class DetailActivity extends AppCompatActivity {
     private TextView solIdDetailTextView, solTempDetailTextView, solPressureDetailTextView;
+    private SolView solView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +34,32 @@ public class DetailActivity extends AppCompatActivity {
         solTempDetailTextView = findViewById(R.id.sol_temp_detail);
         solPressureDetailTextView = findViewById(R.id.sol_pressure_detail);
 
-        // Retrieve Sol object from the Intent
         Sol sol = (Sol) getIntent().getSerializableExtra("sol");
 
-        // Display Sol details
         if (sol != null) {
             displaySolDetails(sol);
         }
+
+        solView = findViewById(R.id.solView);
+        if (sol != null) {
+            List<WindSensor> windSensors = sol.getWindSensors();
+            float[] windValues = new float[16];
+
+            for (int i = 0; i < windSensors.size(); i++) {
+                WindSensor sensor = windSensors.get(i);
+                windValues[i] = (float) sensor.getWindSpeed();
+            }
+
+            solView = findViewById(R.id.solView);
+            solView.setValues(windValues);
+        }
+
     }
 
     private void displaySolDetails(Sol sol) {
-        // Set Sol ID
         solIdDetailTextView.setText("Sol ID: (" + sol.getSolId() + ")");
-
-        // Format the temperature data
         String temperatureText = "Temperature: avg: " + sol.getAvgTemp() + ", min: " + sol.getMinTemp() + ", max: " + sol.getMaxTemp();
         solTempDetailTextView.setText(temperatureText);
-
-        // Format the pressure data
         String pressureText = "Pressure: avg: " + sol.getAvgPressure() + " , min: " + sol.getMinPressure() + " , max: " + sol.getMaxPressure();
         solPressureDetailTextView.setText(pressureText);
     }
