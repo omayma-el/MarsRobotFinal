@@ -1,6 +1,8 @@
 package fr.omayma.marsrobot.model;
 
-public class WindSensor {
+import java.io.Serializable;
+
+public class WindSensor implements Serializable {
     private String sensorId;
     private double windSpeed;
     private double directionDegrees;

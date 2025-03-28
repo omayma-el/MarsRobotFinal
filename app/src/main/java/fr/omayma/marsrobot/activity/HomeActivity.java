@@ -1,5 +1,6 @@
 package fr.omayma.marsrobot.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -12,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.Serializable;
 import java.util.List;
 
 import fr.omayma.marsrobot.R;
@@ -59,6 +61,20 @@ public class HomeActivity extends AppCompatActivity {
                 // Set up the adapter for the ListView
                 SolAdapter adapter = new SolAdapter(HomeActivity.this, sols);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener((parent, view, position, id) -> {
+                    // Get the clicked Sol object
+                    Sol clickedSol = sols.get(position);
+
+                    // Create an Intent to start the DetailActivity
+                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+
+                    // Pass the Sol object to the DetailActivity
+                    intent.putExtra("sol", clickedSol);
+
+                    // Start the DetailActivity
+                    startActivity(intent);
+                });
             }
 
             @Override

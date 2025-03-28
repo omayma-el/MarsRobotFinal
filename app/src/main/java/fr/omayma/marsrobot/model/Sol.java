@@ -3,10 +3,11 @@ package fr.omayma.marsrobot.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sol {
+public class Sol implements Serializable {
     private String solId;
     private double avgTemp;
     private double minTemp;
