@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MarsRobot</string>
+    <string name="welcome_text">What\'s the weather like on Mars ?</string>
+    <string name="welcome_button">SEE HISTORY</string>
+</resources>

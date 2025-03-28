@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MarsRobot</string>
+    <string name="welcome_text">Quelle météo sur Mars ?</string>
+    <string name="welcome_button">VOIR L\'HISTORIQUE</string>
+</resources>
