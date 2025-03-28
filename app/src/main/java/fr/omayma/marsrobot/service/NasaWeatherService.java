@@ -11,7 +11,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.omayma.marsrobot.model.Sol;
+import fr.omayma.marsrobot.model.WindSensor;
 
 public class NasaWeatherService {
 
@@ -41,13 +49,25 @@ public class NasaWeatherService {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess();
+                        List<Sol> sols = new ArrayList<>();
+                        try {
+                            JSONArray solKeys = response.getJSONArray("sol_keys");
+                            for (int i = 0; i < solKeys.length(); i++) {
+                                String solId = solKeys.getString(i);
+                                JSONObject solData = response.getJSONObject(solId);
+                                Sol sol = new Sol(solId, solData); // Using the model constructor to parse JSON
+                                sols.add(sol);
+                            }
+                            callback.onSuccess(sols); // Pass the list of sols to the callback
+                        } catch (JSONException e) {
+                            callback.onError(e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError();
+                        callback.onError(error);
                     }
                 }
         );
